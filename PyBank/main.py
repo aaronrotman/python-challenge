@@ -38,7 +38,7 @@ with open(csv_path) as csv_file:
         
         #Change the current row 'Amount' type to integer
         row[1] = int(row[1])
-  
+        #Append the current month's data as a list to csv_list
         csv_list.append(row)
     
 #Variabale to store the net profit or loss for the time period covered by this data
@@ -78,11 +78,16 @@ for i in range(len(csv_list)):
 
         #Set the 'Amount' value for max_decrease equal to the current month's change in profits
         max_decrease['Amount'] = profit_change
-
+    
+    #Add the current months profit to the net profit counter
+    net_profit += current_profit
 
 #Print out a summary of key metrics
 #Print the number of months that the data set covers.
 print(f"This analysis covers {data_months} months of data.")
+
+#Print the total net profit for the time period covered by this data
+print(f"Total net profit: {net_profit}")
 
 #Print the 'Date' and 'Amount' for the time period with greatest increase in profits
 print(f"The greatest increase in profits was in {max_increase['Date']} with a profit of {max_increase['Amount']}")
