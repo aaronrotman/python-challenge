@@ -117,13 +117,46 @@ print(f"The greatest decrease in profits was in {max_decrease['Date']} with a lo
 
 #Variable to store the sum of the monthly change in profits
 sum_change = 0
+#Count the number of months of profit change 
 num_change = len(change_list)
-print(len(change_list))
+
+#Iterate through each month of data
 for item in change_list:
+    #Stores the current month's change in profits
     current_change = item
+
+    #Calculate the sum of the changes for all months
     sum_change += current_change
 
+#Calculate the mean change for all months
 mean_change = sum_change/num_change
 
+#Print the mean change in profits for all months
 print(f"Average change: {mean_change}")
 
+#Assign the output path to a variable
+output_path = os.path.join("output.txt")
+
+#Open the file in write mode and store the contents in a variable
+with open(output_path, 'w') as output_file:
+    
+    #Initialize the csv writer and specify the delimiter
+    csv_writer = csv.writer(output_file, delimiter = ",")
+
+    #Write a title for the summary to the first row
+    csv_writer.writerow(["Financial Analysis Summary"])
+
+    #Write the total number of months included in the data to the second row
+    csv_writer.writerow([f"Total Number of Months: {data_months}"])
+
+    #Write the total net profit to the third row
+    csv_writer.writerow([f"Net Total Profit/Loss: ${net_profit}"])
+
+    #Write the average change in profits to the fourth row
+    csv_writer.writerow([f"Mean Change in Profits: ${mean_change}"])
+
+    #Write the greatest increase in profits to the fifth row
+    csv_writer.writerow([f"Greatest Increase in Profits: {max_increase['Date']} (${max_increase['Amount']})"])
+
+    #Write the greatest decrease in profits to the sixth row
+    csv_writer.writerow([f"Greatest Decrease in Profits: {max_decrease['Date']} (${max_decrease['Amount']})"])
