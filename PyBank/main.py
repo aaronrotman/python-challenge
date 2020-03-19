@@ -14,25 +14,20 @@ csv_list =[]
 
 #Create a dictionary to store 'Date' and 'Amount' for the month with the greatest increase in profits
 max_increase = {
-    
     #Set 'Amount' to start at 0
     'Amount': 0,
+    
 }
-
 
 #Create a dictionary to store 'Date' and 'Amount' for the month with the greatest decrease in profits
 max_decrease = {
-    
     #Set 'Amount to start at 0
-    'Amount': 0
+    'Amount': 0,
 }
-
-#Set max_decrease to start at 0
-max_decrease['Amount'] = 0
 
 with open(csv_path) as csv_file:
 
-    #Select the delimiter and choose a variable to store that selection
+    #Assign a variable to store the csv.reader object
     csv_reader = csv.reader(csv_file, delimiter = ",")
 
     #Assign the header row to a variable
@@ -47,7 +42,7 @@ with open(csv_path) as csv_file:
 
         #Append the temporary list to csv_list
         csv_list.append(row)
-        
+
     #Loop through each list in csv_list
     for list in csv_list:
         
@@ -83,15 +78,12 @@ with open(csv_path) as csv_file:
         elif int(list[1]) == max_decrease['Amount']:
             print("Uh oh! There are multiple values for max_decrease")
 
-
-
     #Print the 'Date' and 'Amount' for the time period with greatest increase in profits
     print(f"The greatest increase in profits was in {max_increase['Date']} with a profit of {max_increase['Amount']}")
 
     #Print the 'Date' and 'Amount' for the time period with greatest decrease in profits
-    print(f"The greatest decrease in profits was in {max_decrease['Date']} with a loss of {max_decrease['Amount']}")
-
-
+    print(f"The greatest decrease in profits was in {max_decrease['Date']} with a loss of {max_decrease['Amount']}") 
+    
 #Store the first date in a variable
 first_date = csv_list[0][0]
 print(f"First date: {first_date}")
@@ -99,5 +91,9 @@ print(f"First date: {first_date}")
 #Store the last date in a variable
 last_date = csv_list [-1][0]
 print(f"Last Date: {last_date}")
+
+#Calculate the number of months included in the data set
+data_months = len(csv_list)
+print(f"This analysis covers {data_months} months of data.")
 
 
