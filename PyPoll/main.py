@@ -11,7 +11,7 @@ poll_path  = os.path.join("..", "local", "election_data.csv")
 output_path = os.path.join("election_results.txt")
 
 #Empty list to store the name of the candidate selected for each vote
-candidate_list = []
+votes_cast = []
 
 #Empty list to store the name of each unique candidate who received a vote
 unique_list = []
@@ -37,19 +37,35 @@ with open(poll_path) as election_data:
         #Append the candidates name to a new list
         #candidate_list += candidate_name
         if candidate_name in unique_list:
-            candidate_list.append(candidate_name)
+            votes_cast.append(candidate_name)
             #print(f"Unique List: {unique_list}")
         elif candidate_name not in unique_list:
             #print(candidate_name)
-            candidate_list.append(candidate_name)
+            votes_cast.append(candidate_name)
             unique_list.append(candidate_name)
             #print(unique_list)
-total_votes = len(candidate_list)       
-print(unique_list)
+
+#Variable to store the total number of votes cast
+total_votes = len(votes_cast)       
 print(f"Total Votes: {total_votes}")    
 #print(candidate_list[0]) 
 #print(candidate_list[-1])
 #print(total_votes)
+
+#Function to count how many votes each candidate received
+results_list = []
+
+#Iterate through each candidate in the list of unique candidates
+for candidate in unique_list:
+    vote_count = votes_cast.count(candidate)
+    candidate_info = [candidate, vote_count]
+    #Append the candidates vote count to the results list
+    results_list.append(candidate_info)
+#Determine which candidate received the most votes
+    
+for result in results_list:
+    print(f"{result[0]}: {result[1]}")
+
 
 #Write the election results to a new text file 
 
@@ -59,6 +75,7 @@ with open(output_path, 'w') as results_file:
     #Initialize the csv writer and assign the writer to a variable
     file_writer = csv.writer(results_file, delimiter = ",")
 
-    file_writer.writerow([f"List of Candidates: {unique_list}"])
     file_writer.writerow([f"Total Votes: {total_votes}"])
 
+    for result in results_list:
+        file_writer.writerow([f"{result[0]}: {result[1]}"])
