@@ -6,7 +6,7 @@ import os
 import csv
 
 #Assign the file path to a variable
-csv_path = os.path.join("..", "local", "budget_data.csv")
+csv_path = os.path.join("Resources", "budget_data.csv")
 
 #Create an empty list that will store each row of the csv file as its own list within this list
 csv_list =[]
