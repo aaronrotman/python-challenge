@@ -40,10 +40,6 @@ with open(poll_path) as election_data:
             votes_cast.append(candidate_name)
             #Add the candidate's name to the list of unique names
             unique_list.append(candidate_name)
-            
-
-  
-
 
 #List to store the names and number of votes for each candidate
 results_list = []
@@ -71,21 +67,30 @@ print(f"Total Votes: {total_votes}")
 most_votes = 0
 #Variable to store the name of the candidate who received the highest number of votes
 winner = ""
+percent_vote = 0
 
 #Print the name and number of votes for each candidate
 #Iterate through each candidate who received a vote
 for result in results_list:
+    #Variable to calculate the percent of votes a candidate received
+    vote_percent = (result[1]/total_votes) * 100
+    #Append the percent of the vote this candidate recieved to the list of results
+    result.append(vote_percent)
     #Print the candidates name and number of votes received
-    print(f"{result[0]}: {result[1]}")
-    #check if this candidate received more votes than the current high number
+    print(f"{result[0]}: {'{:.2f}'.format(result[2])}% ({result[1]})")
+
+    #Check if this candidate received more votes than the current high number
     if result[1] > most_votes:
         #Assign the current candidates value to the most votes variable
         most_votes = result[1]
         #Assign the current candidates name to the winner variable
         winner = result[0]
+        #Assign the current candidate's percent of the vote to percent_vote
+        percent_vote = result[2]
+        
 
 #Print the name and vote count of the winning candidate
-print(f"The winner is: {winner} with {most_votes} votes!")
+print(f"The winner is: {winner} with {most_votes} ({'{:.2f}'.format(percent_vote)}%) votes!")
 
 
 #Write the election results to a new text file 
@@ -101,7 +106,8 @@ with open(output_path, "w") as results_file:
     #Iterate through each candidate in the list of results
     for result in results_list:
         #Write the name and number of votes for this candidate to the summary text file
-        file_writer.writerow([f"{result[0]}: {result[1]}"])
+        file_writer.writerow([f"{result[0]}: {'{:.2f}'.format(result[2])}% ({result[1]})"])
 
     #Write the winner's name and vote count to the summary text file
-    file_writer.writerow([f"The winner is: {winner} with {most_votes} votes!"])
+    file_writer.writerow([f"The winner is: {winner} with {most_votes} ({'{:.2f}'.format(percent_vote)}%) votes!"])
+
